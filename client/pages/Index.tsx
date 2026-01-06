@@ -111,8 +111,8 @@ export default function Home() {
         {/* Bottom accent */}
         <div className="absolute bottom-8 left-0 right-0 flex justify-center gap-2">
           <div className="w-2 h-2 rounded-full bg-neon-cyan animate-pulse" />
-          <div className="w-2 h-2 rounded-full bg-neon-purple animate-pulse delay-100" />
-          <div className="w-2 h-2 rounded-full bg-neon-cyan animate-pulse delay-200" />
+          <div className="w-2 h-2 rounded-full bg-neon-purple animate-pulse" style={{ animationDelay: '0.1s' }} />
+          <div className="w-2 h-2 rounded-full bg-neon-cyan animate-pulse" style={{ animationDelay: '0.2s' }} />
         </div>
       </div>
     </div>
