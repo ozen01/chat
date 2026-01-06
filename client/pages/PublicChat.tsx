@@ -46,6 +46,7 @@ export default function PublicChat() {
 
     // Listen for new messages
     const handleMessage = (message: Message) => {
+      console.log("[Client] Received message:", message);
       setRoomState((prev) =>
         prev
           ? {
