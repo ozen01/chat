@@ -233,6 +233,8 @@ export function createServer() {
         const { text } = data;
         const userInfo = userSockets.get(socket.id);
 
+        console.log(`[Message] User ${socket.id} sending message. UserInfo:`, userInfo);
+
         if (!userInfo) {
           callback({ error: "User not found in room" });
           return;
@@ -264,6 +266,7 @@ export function createServer() {
           room.messages.shift();
         }
 
+        console.log(`[Message] Broadcasting to room ${userInfo.roomId}:`, message);
         io.to(userInfo.roomId).emit("message", message);
         callback({ success: true });
       } catch (error) {
