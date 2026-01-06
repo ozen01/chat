@@ -94,25 +94,24 @@ export function ChatWindow({
             </div>
           </div>
         ) : (
-          messages.map((message) => (
-            <div
-              key={message.id}
-              className={`flex ${
-                message.username === username ? "chat-message-user justify-end" : "chat-message-other justify-start"
-              }`}
-            >
-              <div className="max-w-xs">
-                <div className="text-xs text-foreground/60 font-mono mb-1">
-                  {message.username}
-                </div>
-                <div className="chat-message-bubble">
-                  <p className={message.username === username ? "text-black font-semibold" : "text-white"}>
-                    {message.text}
-                  </p>
+          messages.map((message) => {
+            const isUserMessage = message.username === username;
+            return (
+              <div
+                key={message.id}
+                className={`flex ${isUserMessage ? "justify-end" : "justify-start"}`}
+              >
+                <div className={`max-w-xs ${isUserMessage ? "chat-message-user" : "chat-message-other"}`}>
+                  <div className="text-xs text-foreground/60 font-mono mb-1">
+                    {message.username}
+                  </div>
+                  <div className="chat-message-bubble">
+                    <p>{message.text}</p>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))
+            );
+          })
         )}
         <div ref={messagesEndRef} />
       </div>
