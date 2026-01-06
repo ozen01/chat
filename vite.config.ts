@@ -2,6 +2,7 @@ import { defineConfig, Plugin } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
 import { createServer } from "./server";
+import { createServer as createHttpServer } from "http";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
@@ -11,17 +12,6 @@ export default defineConfig(({ mode }) => ({
     fs: {
       allow: ["./client", "./shared"],
       deny: [".env", ".env.*", "*.{crt,pem}", "**/.git/**", "server/**"],
-    },
-    proxy: {
-      "/socket.io": {
-        target: "ws://localhost:3001",
-        ws: true,
-        changeOrigin: true,
-      },
-      "/api": {
-        target: "http://localhost:3001",
-        changeOrigin: true,
-      },
     },
   },
   build: {
@@ -37,21 +27,25 @@ export default defineConfig(({ mode }) => ({
 }));
 
 function expressPlugin(): Plugin {
+  let httpServer: any = null;
+
   return {
     name: "express-plugin",
     apply: "serve",
-    configureServer(server) {
-      // Start the backend server on port 3001 for Socket.io and API
-      const { createServer: createHttpServer } = await import("http");
+    async configureServer(server) {
       const app = createServer();
-      const httpServer = app._httpServer || createHttpServer(app);
+      const sockServer = app._httpServer;
 
-      httpServer.listen(3001, "::", () => {
-        console.log("🔌 Backend server with Socket.io running on port 3001");
-      });
+      // If we have an HTTP server from Socket.io setup, listen on a separate port
+      if (sockServer) {
+        sockServer.listen(3001, "::", () => {
+          console.log("🔌 Backend server with Socket.io running on port 3001");
+        });
+        httpServer = sockServer;
+      }
 
+      // Add Express app as middleware for API routes
       return () => {
-        // Add Express middleware for other routes
         server.middlewares.use(app);
       };
     },
