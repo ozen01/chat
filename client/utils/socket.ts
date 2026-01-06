@@ -25,20 +25,11 @@ export interface RoomState {
 
 export const getSocket = (): Socket => {
   if (!socket) {
-    // Determine the correct Socket.io URL
-    let socketUrl: string | undefined;
+    // Connect to the same origin
+    // Socket.io will automatically use the correct protocol and host
+    console.log("[Socket.io] Connecting to same origin...");
 
-    if (import.meta.env.DEV) {
-      // In local development, connect to port 3001 on the same host
-      const protocol = window.location.protocol === "https:" ? "https:" : "http:";
-      socketUrl = `${protocol}//localhost:3001`;
-    }
-    // In production or when served through a proxy, don't specify a URL
-    // Socket.io will connect to the same origin
-
-    console.log("[Socket.io] Connecting to:", socketUrl || "same origin");
-
-    socket = io(socketUrl, {
+    socket = io({
       reconnection: true,
       reconnectionDelay: 1000,
       reconnectionDelayMax: 5000,
