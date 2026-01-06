@@ -22,10 +22,13 @@ app.get("*", (req, res) => {
   res.sendFile(path.join(distPath, "index.html"));
 });
 
-app.listen(port, () => {
-  console.log(`🚀 Fusion Starter server running on port ${port}`);
+const httpServer = app._httpServer || app;
+
+httpServer.listen(port, () => {
+  console.log(`🚀 Cyberpunk Chat Server running on port ${port}`);
   console.log(`📱 Frontend: http://localhost:${port}`);
   console.log(`🔧 API: http://localhost:${port}/api`);
+  console.log(`🔌 WebSocket: ws://localhost:${port}`);
 });
 
 // Graceful shutdown
