@@ -28,9 +28,10 @@ export default function PrivateChat() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Since we were already in a create/join form, the user should already be in the room
-    // But we need to reconstruct the room state based on Socket.io events
+    // Get room state from navigation or initialize empty
     if (!roomId) return;
+
+    const navigationState = (location.state as any) || {};
 
     // Listen for new messages
     const handleMessage = (message: Message) => {
@@ -58,13 +59,13 @@ export default function PrivateChat() {
       );
     };
 
-    // Initialize room state - we'll get it from the listeners
+    // Initialize room state from navigation
     setRoomState({
       roomId,
-      userId: "",
-      username: "",
-      users: [],
-      messages: [],
+      userId: navigationState.userId || "",
+      username: navigationState.username || "",
+      users: navigationState.users || [],
+      messages: navigationState.messages || [],
     });
     setIsLoading(false);
 
@@ -75,7 +76,7 @@ export default function PrivateChat() {
       offMessage();
       offUsersUpdated();
     };
-  }, [roomId]);
+  }, [roomId, location]);
 
   const handleSendMessage = (text: string) => {
     sendMessage(text, (response) => {
