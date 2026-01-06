@@ -25,17 +25,25 @@ export interface RoomState {
 
 export const getSocket = (): Socket => {
   if (!socket) {
-    // In development, connect to localhost:3001
-    // In production, connect to the same host (no explicit URL needed)
-    const socketUrl = import.meta.env.DEV
-      ? "http://localhost:3001"
-      : undefined;
+    // Determine the correct Socket.io URL
+    let socketUrl: string | undefined;
+
+    if (import.meta.env.DEV) {
+      // In local development, connect to port 3001 on the same host
+      const protocol = window.location.protocol === "https:" ? "https:" : "http:";
+      socketUrl = `${protocol}//localhost:3001`;
+    }
+    // In production or when served through a proxy, don't specify a URL
+    // Socket.io will connect to the same origin
+
+    console.log("[Socket.io] Connecting to:", socketUrl || "same origin");
 
     socket = io(socketUrl, {
       reconnection: true,
       reconnectionDelay: 1000,
       reconnectionDelayMax: 5000,
       reconnectionAttempts: 5,
+      transports: ["websocket", "polling"],
     });
 
     // Log connection events
@@ -47,8 +55,8 @@ export const getSocket = (): Socket => {
       console.error("[Socket.io] Connection error:", error);
     });
 
-    socket.on("disconnect", () => {
-      console.log("[Socket.io] Disconnected");
+    socket.on("disconnect", (reason) => {
+      console.log("[Socket.io] Disconnected:", reason);
     });
   }
   return socket;
