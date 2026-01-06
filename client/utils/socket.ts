@@ -25,7 +25,13 @@ export interface RoomState {
 
 export const getSocket = (): Socket => {
   if (!socket) {
-    socket = io({
+    // In development, connect to localhost:3001
+    // In production, connect to the same host (no explicit URL needed)
+    const socketUrl = import.meta.env.DEV
+      ? "http://localhost:3001"
+      : undefined;
+
+    socket = io(socketUrl, {
       reconnection: true,
       reconnectionDelay: 1000,
       reconnectionDelayMax: 5000,
