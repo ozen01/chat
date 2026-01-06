@@ -27,12 +27,13 @@ export default function PrivateChat() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // This page should only be accessed after successfully joining a room
-    // The room state should be passed through the socket connection
-    // For now, we'll set up the listeners and wait for the server to send room state
+    // Since we were already in a create/join form, the user should already be in the room
+    // But we need to reconstruct the room state based on Socket.io events
+    if (!roomId) return;
 
     // Listen for new messages
     const handleMessage = (message: Message) => {
+      console.log("[PrivateChat] Received message:", message);
       setRoomState((prev) =>
         prev
           ? {
@@ -45,6 +46,7 @@ export default function PrivateChat() {
 
     // Listen for users update
     const handleUsersUpdated = (users: User[]) => {
+      console.log("[PrivateChat] Users updated:", users);
       setRoomState((prev) =>
         prev
           ? {
@@ -55,18 +57,15 @@ export default function PrivateChat() {
       );
     };
 
-    // Initialize room state from Socket.io if available
-    // This is a placeholder - the actual room state comes from the server
-    if (roomId) {
-      setRoomState({
-        roomId,
-        userId: "",
-        username: "",
-        users: [],
-        messages: [],
-      });
-      setIsLoading(false);
-    }
+    // Initialize room state - we'll get it from the listeners
+    setRoomState({
+      roomId,
+      userId: "",
+      username: "",
+      users: [],
+      messages: [],
+    });
+    setIsLoading(false);
 
     onMessage(handleMessage);
     onUsersUpdated(handleUsersUpdated);
