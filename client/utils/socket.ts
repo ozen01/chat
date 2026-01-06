@@ -31,6 +31,19 @@ export const getSocket = (): Socket => {
       reconnectionDelayMax: 5000,
       reconnectionAttempts: 5,
     });
+
+    // Log connection events
+    socket.on("connect", () => {
+      console.log("[Socket.io] Connected with ID:", socket?.id);
+    });
+
+    socket.on("connect_error", (error) => {
+      console.error("[Socket.io] Connection error:", error);
+    });
+
+    socket.on("disconnect", () => {
+      console.log("[Socket.io] Disconnected");
+    });
   }
   return socket;
 };
