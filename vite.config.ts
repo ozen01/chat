@@ -32,7 +32,7 @@ function expressPlugin(): Plugin {
   return {
     name: "express-plugin",
     apply: "serve",
-    async configureServer(server) {
+    configureServer(server) {
       const app = createServer();
       const sockServer = app._httpServer;
 
