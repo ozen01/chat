@@ -12,6 +12,17 @@ export default defineConfig(({ mode }) => ({
       allow: ["./client", "./shared"],
       deny: [".env", ".env.*", "*.{crt,pem}", "**/.git/**", "server/**"],
     },
+    proxy: {
+      "/socket.io": {
+        target: "ws://localhost:3001",
+        ws: true,
+        changeOrigin: true,
+      },
+      "/api": {
+        target: "http://localhost:3001",
+        changeOrigin: true,
+      },
+    },
   },
   build: {
     outDir: "dist/spa",
@@ -28,12 +39,21 @@ export default defineConfig(({ mode }) => ({
 function expressPlugin(): Plugin {
   return {
     name: "express-plugin",
-    apply: "serve", // Only apply during development (serve mode)
+    apply: "serve",
     configureServer(server) {
+      // Start the backend server on port 3001 for Socket.io and API
+      const { createServer: createHttpServer } = await import("http");
       const app = createServer();
+      const httpServer = app._httpServer || createHttpServer(app);
 
-      // Add Express app as middleware to Vite dev server
-      server.middlewares.use(app);
+      httpServer.listen(3001, "::", () => {
+        console.log("🔌 Backend server with Socket.io running on port 3001");
+      });
+
+      return () => {
+        // Add Express middleware for other routes
+        server.middlewares.use(app);
+      };
     },
   };
 }
