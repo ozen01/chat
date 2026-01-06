@@ -42,7 +42,7 @@ export default function PrivateChat() {
               ...prev,
               messages: [...prev.messages, message],
             }
-          : null
+          : null,
       );
     };
 
@@ -55,7 +55,7 @@ export default function PrivateChat() {
               ...prev,
               users,
             }
-          : null
+          : null,
       );
     };
 
@@ -104,7 +104,9 @@ export default function PrivateChat() {
           <div className="text-4xl font-display text-neon-purple animate-neon-glow mb-4">
             CONNECTING...
           </div>
-          <p className="text-foreground/60 font-mono">Initializing secure channel</p>
+          <p className="text-foreground/60 font-mono">
+            Initializing secure channel
+          </p>
         </div>
       </div>
     );

@@ -41,7 +41,11 @@ function generateUsername(): string {
   return `Anon-${randomPart}`;
 }
 
-function createRoom(id: string, type: "public" | "private", password?: string): Room {
+function createRoom(
+  id: string,
+  type: "public" | "private",
+  password?: string,
+): Room {
   return {
     id,
     type,
@@ -129,7 +133,11 @@ function socketioPlugin(): Plugin {
                 const userId = generateRandomId("user");
                 const username = generateUsername();
 
-                const user: User = { id: userId, username, socketId: socket.id };
+                const user: User = {
+                  id: userId,
+                  username,
+                  socketId: socket.id,
+                };
                 room.users.set(userId, user);
                 userSockets.set(socket.id, { roomId: "public", userId });
 
@@ -149,7 +157,9 @@ function socketioPlugin(): Plugin {
                   usersCount: room.users.size,
                 });
 
-                io!.to("public").emit("users-updated", Array.from(room.users.values()));
+                io!
+                  .to("public")
+                  .emit("users-updated", Array.from(room.users.values()));
               } catch (error) {
                 console.error("Error joining public chat:", error);
                 callback({ error: "Failed to join chat" });
@@ -177,7 +187,11 @@ function socketioPlugin(): Plugin {
                 const userId = generateRandomId("user");
                 const username = generateUsername();
 
-                const user: User = { id: userId, username, socketId: socket.id };
+                const user: User = {
+                  id: userId,
+                  username,
+                  socketId: socket.id,
+                };
                 room.users.set(userId, user);
                 userSockets.set(socket.id, { roomId, userId });
 
@@ -228,7 +242,11 @@ function socketioPlugin(): Plugin {
                 const userId = generateRandomId("user");
                 const username = generateUsername();
 
-                const user: User = { id: userId, username, socketId: socket.id };
+                const user: User = {
+                  id: userId,
+                  username,
+                  socketId: socket.id,
+                };
                 room.users.set(userId, user);
                 userSockets.set(socket.id, { roomId, userId });
 
@@ -248,7 +266,9 @@ function socketioPlugin(): Plugin {
                   usersCount: room.users.size,
                 });
 
-                io!.to(roomId).emit("users-updated", Array.from(room.users.values()));
+                io!
+                  .to(roomId)
+                  .emit("users-updated", Array.from(room.users.values()));
 
                 console.log(`User joined private room: ${roomId}`);
               } catch (error) {
@@ -263,7 +283,10 @@ function socketioPlugin(): Plugin {
                 const { text } = data;
                 const userInfo = userSockets.get(socket.id);
 
-                console.log(`[Message] User ${socket.id} sending message. UserInfo:`, userInfo);
+                console.log(
+                  `[Message] User ${socket.id} sending message. UserInfo:`,
+                  userInfo,
+                );
 
                 if (!userInfo) {
                   callback({ error: "User not found in room" });
@@ -295,7 +318,10 @@ function socketioPlugin(): Plugin {
                   room.messages.shift();
                 }
 
-                console.log(`[Message] Broadcasting to room ${userInfo.roomId}:`, message);
+                console.log(
+                  `[Message] Broadcasting to room ${userInfo.roomId}:`,
+                  message,
+                );
                 io!.to(userInfo.roomId).emit("message", message);
                 callback({ success: true });
               } catch (error) {
@@ -323,7 +349,9 @@ function socketioPlugin(): Plugin {
                       username: user?.username,
                       usersCount: room.users.size,
                     });
-                    io!.to(userInfo.roomId).emit("users-updated", Array.from(room.users.values()));
+                    io!
+                      .to(userInfo.roomId)
+                      .emit("users-updated", Array.from(room.users.values()));
                   } else {
                     if (userInfo.roomId !== "public") {
                       rooms.delete(userInfo.roomId);
@@ -355,7 +383,9 @@ function socketioPlugin(): Plugin {
                       username: user?.username,
                       usersCount: room.users.size,
                     });
-                    io!.to(userInfo.roomId).emit("users-updated", Array.from(room.users.values()));
+                    io!
+                      .to(userInfo.roomId)
+                      .emit("users-updated", Array.from(room.users.values()));
                   } else {
                     if (userInfo.roomId !== "public") {
                       rooms.delete(userInfo.roomId);

@@ -101,7 +101,9 @@ export function ChatWindow({
                 key={message.id}
                 className={`flex ${isUserMessage ? "justify-end" : "justify-start"}`}
               >
-                <div className={`max-w-xs ${isUserMessage ? "chat-message-user" : "chat-message-other"}`}>
+                <div
+                  className={`max-w-xs ${isUserMessage ? "chat-message-user" : "chat-message-other"}`}
+                >
                   <div className="text-xs text-foreground/60 font-mono mb-1">
                     {message.username}
                   </div>

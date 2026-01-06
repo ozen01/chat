@@ -95,15 +95,18 @@ export default {
             textShadow: "0 0 10px rgb(0 255 255), 0 0 20px rgb(0 255 255)",
           },
           "50%": {
-            textShadow: "0 0 20px rgb(0 255 255), 0 0 30px rgb(0 255 255), 0 0 40px rgb(0 255 255)",
+            textShadow:
+              "0 0 20px rgb(0 255 255), 0 0 30px rgb(0 255 255), 0 0 40px rgb(0 255 255)",
           },
         },
         "glow-pulse": {
           "0%, 100%": {
-            boxShadow: "0 0 5px hsl(var(--neon-cyan)), 0 0 10px hsl(var(--neon-cyan))",
+            boxShadow:
+              "0 0 5px hsl(var(--neon-cyan)), 0 0 10px hsl(var(--neon-cyan))",
           },
           "50%": {
-            boxShadow: "0 0 10px hsl(var(--neon-cyan)), 0 0 20px hsl(var(--neon-cyan)), 0 0 30px hsl(var(--neon-cyan))",
+            boxShadow:
+              "0 0 10px hsl(var(--neon-cyan)), 0 0 20px hsl(var(--neon-cyan)), 0 0 30px hsl(var(--neon-cyan))",
           },
         },
         flicker: {

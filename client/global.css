@@ -139,12 +139,16 @@
 @layer components {
   .neon-border {
     @apply border border-neon-cyan shadow-lg;
-    box-shadow: 0 0 10px rgba(0, 255, 255, 0.5), inset 0 0 10px rgba(0, 255, 255, 0.1);
+    box-shadow:
+      0 0 10px rgba(0, 255, 255, 0.5),
+      inset 0 0 10px rgba(0, 255, 255, 0.1);
   }
 
   .neon-glow-text {
     @apply text-neon-cyan;
-    text-shadow: 0 0 10px rgba(0, 255, 255, 0.8), 0 0 20px rgba(0, 255, 255, 0.4);
+    text-shadow:
+      0 0 10px rgba(0, 255, 255, 0.8),
+      0 0 20px rgba(0, 255, 255, 0.4);
   }
 
   .neon-button {
@@ -154,7 +158,9 @@
 
   .neon-button:hover {
     @apply bg-neon-cyan;
-    box-shadow: 0 0 20px rgba(0, 255, 255, 0.8), 0 0 30px rgba(0, 255, 255, 0.6);
+    box-shadow:
+      0 0 20px rgba(0, 255, 255, 0.8),
+      0 0 30px rgba(0, 255, 255, 0.6);
     transform: scale(1.05);
   }
 
@@ -165,7 +171,9 @@
 
   .neon-button-secondary:hover {
     @apply text-black bg-neon-cyan;
-    box-shadow: 0 0 20px rgba(0, 255, 255, 0.8), 0 0 30px rgba(0, 255, 255, 0.6);
+    box-shadow:
+      0 0 20px rgba(0, 255, 255, 0.8),
+      0 0 30px rgba(0, 255, 255, 0.6);
     transform: scale(1.05);
   }
 

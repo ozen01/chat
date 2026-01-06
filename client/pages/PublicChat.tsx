@@ -53,7 +53,7 @@ export default function PublicChat() {
               ...prev,
               messages: [...prev.messages, message],
             }
-          : null
+          : null,
       );
     };
 
@@ -65,7 +65,7 @@ export default function PublicChat() {
               ...prev,
               users,
             }
-          : null
+          : null,
       );
     };
 
@@ -120,10 +120,7 @@ export default function PublicChat() {
             ERROR
           </div>
           <p className="text-foreground mb-6">{error}</p>
-          <button
-            onClick={() => navigate("/")}
-            className="neon-button"
-          >
+          <button onClick={() => navigate("/")} className="neon-button">
             Return Home
           </button>
         </div>

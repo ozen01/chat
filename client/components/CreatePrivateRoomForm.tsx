@@ -7,7 +7,9 @@ interface CreatePrivateRoomFormProps {
   onSuccess: () => void;
 }
 
-export function CreatePrivateRoomForm({ onSuccess }: CreatePrivateRoomFormProps) {
+export function CreatePrivateRoomForm({
+  onSuccess,
+}: CreatePrivateRoomFormProps) {
   const navigate = useNavigate();
   const [roomId, setRoomId] = useState("");
   const [password, setPassword] = useState("");
@@ -24,7 +26,9 @@ export function CreatePrivateRoomForm({ onSuccess }: CreatePrivateRoomFormProps)
     }
 
     if (!/^[A-Za-z0-9-_]+$/.test(roomId)) {
-      setError("Room ID can only contain letters, numbers, hyphens, and underscores");
+      setError(
+        "Room ID can only contain letters, numbers, hyphens, and underscores",
+      );
       return;
     }
 

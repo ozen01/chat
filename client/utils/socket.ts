@@ -54,7 +54,15 @@ export const getSocket = (): Socket => {
 };
 
 export const joinPublicChat = (
-  callback: (response: { success?: boolean; error?: string; roomId?: string; userId?: string; username?: string; users?: User[]; messages?: Message[] }) => void
+  callback: (response: {
+    success?: boolean;
+    error?: string;
+    roomId?: string;
+    userId?: string;
+    username?: string;
+    users?: User[];
+    messages?: Message[];
+  }) => void,
 ) => {
   const sock = getSocket();
   sock.emit("join-public-chat", callback);
@@ -63,7 +71,15 @@ export const joinPublicChat = (
 export const createPrivateRoom = (
   roomId: string,
   password: string,
-  callback: (response: { success?: boolean; error?: string; roomId?: string; userId?: string; username?: string; users?: User[]; messages?: Message[] }) => void
+  callback: (response: {
+    success?: boolean;
+    error?: string;
+    roomId?: string;
+    userId?: string;
+    username?: string;
+    users?: User[];
+    messages?: Message[];
+  }) => void,
 ) => {
   const sock = getSocket();
   sock.emit("create-private-room", { roomId, password }, callback);
@@ -72,7 +88,15 @@ export const createPrivateRoom = (
 export const joinPrivateRoom = (
   roomId: string,
   password: string,
-  callback: (response: { success?: boolean; error?: string; roomId?: string; userId?: string; username?: string; users?: User[]; messages?: Message[] }) => void
+  callback: (response: {
+    success?: boolean;
+    error?: string;
+    roomId?: string;
+    userId?: string;
+    username?: string;
+    users?: User[];
+    messages?: Message[];
+  }) => void,
 ) => {
   const sock = getSocket();
   sock.emit("join-private-room", { roomId, password }, callback);
@@ -80,14 +104,14 @@ export const joinPrivateRoom = (
 
 export const sendMessage = (
   text: string,
-  callback: (response: { success?: boolean; error?: string }) => void
+  callback: (response: { success?: boolean; error?: string }) => void,
 ) => {
   const sock = getSocket();
   sock.emit("send-message", { text }, callback);
 };
 
 export const exitRoom = (
-  callback: (response: { success?: boolean; error?: string }) => void
+  callback: (response: { success?: boolean; error?: string }) => void,
 ) => {
   const sock = getSocket();
   sock.emit("exit-room", callback);
@@ -99,14 +123,14 @@ export const onMessage = (callback: (message: Message) => void) => {
 };
 
 export const onUserJoined = (
-  callback: (data: { username: string; usersCount: number }) => void
+  callback: (data: { username: string; usersCount: number }) => void,
 ) => {
   const sock = getSocket();
   sock.on("user-joined", callback);
 };
 
 export const onUserLeft = (
-  callback: (data: { username: string; usersCount: number }) => void
+  callback: (data: { username: string; usersCount: number }) => void,
 ) => {
   const sock = getSocket();
   sock.on("user-left", callback);

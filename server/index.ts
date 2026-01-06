@@ -41,7 +41,11 @@ function generateUsername(): string {
   return `Anon-${randomPart}`;
 }
 
-function createRoom(id: string, type: "public" | "private", password?: string): Room {
+function createRoom(
+  id: string,
+  type: "public" | "private",
+  password?: string,
+): Room {
   return {
     id,
     type,
@@ -233,7 +237,10 @@ export function createServer() {
         const { text } = data;
         const userInfo = userSockets.get(socket.id);
 
-        console.log(`[Message] User ${socket.id} sending message. UserInfo:`, userInfo);
+        console.log(
+          `[Message] User ${socket.id} sending message. UserInfo:`,
+          userInfo,
+        );
 
         if (!userInfo) {
           callback({ error: "User not found in room" });
@@ -266,7 +273,10 @@ export function createServer() {
           room.messages.shift();
         }
 
-        console.log(`[Message] Broadcasting to room ${userInfo.roomId}:`, message);
+        console.log(
+          `[Message] Broadcasting to room ${userInfo.roomId}:`,
+          message,
+        );
         io.to(userInfo.roomId).emit("message", message);
         callback({ success: true });
       } catch (error) {
@@ -290,7 +300,10 @@ export function createServer() {
               username: user?.username,
               usersCount: room.users.size,
             });
-            io.to(userInfo.roomId).emit("users-updated", Array.from(room.users.values()));
+            io.to(userInfo.roomId).emit(
+              "users-updated",
+              Array.from(room.users.values()),
+            );
           } else {
             // Auto-destroy room if empty (except public room)
             if (userInfo.roomId !== "public") {
@@ -324,7 +337,10 @@ export function createServer() {
               username: user?.username,
               usersCount: room.users.size,
             });
-            io.to(userInfo.roomId).emit("users-updated", Array.from(room.users.values()));
+            io.to(userInfo.roomId).emit(
+              "users-updated",
+              Array.from(room.users.values()),
+            );
           } else {
             // Auto-destroy room if empty (except public room)
             if (userInfo.roomId !== "public") {

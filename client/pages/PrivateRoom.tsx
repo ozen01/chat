@@ -109,9 +109,13 @@ export default function PrivateRoom() {
           </div>
         )}
 
-        {mode === "create" && <CreatePrivateRoomForm onSuccess={() => navigate("/")} />}
+        {mode === "create" && (
+          <CreatePrivateRoomForm onSuccess={() => navigate("/")} />
+        )}
 
-        {mode === "join" && <JoinPrivateRoomForm onSuccess={() => navigate("/")} />}
+        {mode === "join" && (
+          <JoinPrivateRoomForm onSuccess={() => navigate("/")} />
+        )}
       </div>
     </div>
   );
