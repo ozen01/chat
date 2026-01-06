@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { ChatWindow } from "@/components/ChatWindow";
 import {
   sendMessage,
@@ -16,6 +16,7 @@ import {
 export default function PrivateChat() {
   const { roomId } = useParams<{ roomId: string }>();
   const navigate = useNavigate();
+  const location = useLocation();
   const [roomState, setRoomState] = useState<{
     roomId: string;
     userId: string;
