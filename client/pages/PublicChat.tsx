@@ -79,7 +79,9 @@ export default function PublicChat() {
   }, []);
 
   const handleSendMessage = (text: string) => {
+    console.log("[PublicChat] Sending message:", text);
     sendMessage(text, (response) => {
+      console.log("[PublicChat] Send message response:", response);
       if (!response.success) {
         setError(response.error || "Failed to send message");
       }
