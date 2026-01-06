@@ -49,8 +49,15 @@ export function CreatePrivateRoomForm({ onSuccess }: CreatePrivateRoomFormProps)
       setIsLoading(false);
 
       if (response.success) {
-        // Redirect to private chat room
-        navigate(`/chat/private/${roomId}`);
+        // Pass room state through navigation so PrivateChat can use it
+        navigate(`/chat/private/${roomId}`, {
+          state: {
+            userId: response.userId,
+            username: response.username,
+            users: response.users,
+            messages: response.messages,
+          },
+        });
       } else {
         setError(response.error || "Failed to create room");
       }
