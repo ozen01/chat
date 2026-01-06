@@ -98,7 +98,7 @@ export function ChatWindow({
             <div
               key={message.id}
               className={`flex ${
-                message.username === username ? "justify-end" : "justify-start"
+                message.username === username ? "chat-message-user justify-end" : "chat-message-other justify-start"
               }`}
             >
               <div className="max-w-xs">
@@ -106,7 +106,7 @@ export function ChatWindow({
                   {message.username}
                 </div>
                 <div className="chat-message-bubble">
-                  <p className={message.username === username ? "text-black" : "text-white"}>
+                  <p className={message.username === username ? "text-black font-semibold" : "text-white"}>
                     {message.text}
                   </p>
                 </div>
