@@ -28,24 +28,14 @@ export default defineConfig(({ mode }) => ({
 }));
 
 function expressPlugin(): Plugin {
-  let httpServer: any = null;
-
   return {
     name: "express-plugin",
     apply: "serve",
     configureServer(server) {
       const app = createServer();
-      const sockServer = app._httpServer;
 
-      // If we have an HTTP server from Socket.io setup, listen on a separate port
-      if (sockServer) {
-        sockServer.listen(3001, "::", () => {
-          console.log("🔌 Backend server with Socket.io running on port 3001");
-        });
-        httpServer = sockServer;
-      }
-
-      // Add Express app as middleware for API routes
+      // Add Express app as middleware to Vite dev server
+      // This handles API routes and Socket.io on the same port
       return () => {
         server.middlewares.use(app);
       };
